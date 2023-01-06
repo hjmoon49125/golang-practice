@@ -1,0 +1,71 @@
+definitions:
+  model.AccountReq:
+    properties:
+      account:
+        type: string
+      password:
+        type: string
+    required:
+    - account
+    - password
+    type: object
+  model.Response:
+    properties:
+      Data: {}
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Swagger
+  title: Swagger
+  version: "1.0"
+paths:
+  /api/hello:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Response'
+            - properties:
+                Data:
+                  type: string
+              type: object
+      security:
+      - jwt: []
+      summary: Say Hello
+      tags:
+      - Test
+  /auth/login:
+    post:
+      parameters:
+      - description: login params
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.AccountReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/model.Response'
+            - properties:
+                Data:
+                  type: string
+              type: object
+      summary: Login
+      tags:
+      - Auth
+securityDefinitions:
+  jwt:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
